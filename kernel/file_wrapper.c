@@ -357,7 +357,7 @@ static ssize_t ksu_wrapper_copy_file_range(struct file *file_in, loff_t pos_in,
 }
 #endif
 
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 20, 0)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 16, 0)
 // no REMAP_FILE_DEDUP: use file_in
 // https://cs.android.com/android/kernel/superproject/+/common-android-mainline:common/fs/read_write.c;l=1598-1599;drc=398da7defe218d3e51b0f3bdff75147e28125b60
 // https://cs.android.com/android/kernel/superproject/+/common-android-mainline:common/fs/remap_range.c;l=403-404;drc=398da7defe218d3e51b0f3bdff75147e28125b60
@@ -382,7 +382,7 @@ static loff_t ksu_wrapper_remap_file_range(struct file *file_in, loff_t pos_in,
 }
 #endif
 
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 19, 0)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 16, 0)
 static int ksu_wrapper_fadvise(struct file *fp, loff_t off1, loff_t off2,
 			       int flags)
 {
@@ -446,7 +446,7 @@ static struct ksu_file_wrapper *ksu_create_file_wrapper(struct file *fp)
 	p->ops.mmap = fp->f_op->mmap ? ksu_wrapper_mmap : NULL;
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 12, 0)
 	p->ops.fop_flags = fp->f_op->fop_flags;
-#elif LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0)
+#elif LINUX_VERSION_CODE >= KERNEL_VERSION(5, 16, 0)
 	p->ops.mmap_supported_flags = fp->f_op->mmap_supported_flags;
 #endif
 	p->ops.flush = fp->f_op->flush ? ksu_wrapper_flush : NULL;
@@ -474,12 +474,12 @@ static struct ksu_file_wrapper *ksu_create_file_wrapper(struct file *fp)
 	p->ops.copy_file_range =
 		fp->f_op->copy_file_range ? ksu_wrapper_copy_file_range : NULL;
 #endif
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 20, 0)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 16, 0)
 	p->ops.remap_file_range = fp->f_op->remap_file_range ?
 					  ksu_wrapper_remap_file_range :
 					  NULL;
 #endif
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 19, 0)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 16, 0)
 	p->ops.fadvise = fp->f_op->fadvise ? ksu_wrapper_fadvise : NULL;
 #endif
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 6, 0)
@@ -519,7 +519,7 @@ static const struct dentry_operations ksu_file_wrapper_d_ops = {
 #define ksu_anon_inode_create_getfile_compat anon_inode_create_getfile
 #elif LINUX_VERSION_CODE >= KERNEL_VERSION(5, 16, 0)
 #define ksu_anon_inode_create_getfile_compat anon_inode_getfile_secure
-#elif LINUX_VERSION_CODE >= KERNEL_VERSION(4, 19, 0)
+#elif LINUX_VERSION_CODE >= KERNEL_VERSION(5, 16, 0)
 // There is no anon_inode_create_getfile in 4.19, but it's not difficult to implement it.
 // https://cs.android.com/android/kernel/superproject/+/common-android12-5.10:common/fs/anon_inodes.c;l=58-125;drc=0d34ce8aa78e38affbb501690bcabec4df88620e
 
@@ -683,7 +683,7 @@ done:
 
 void ksu_file_wrapper_init(void)
 {
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 19, 0) &&                          \
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 16, 0) &&                          \
 	LINUX_VERSION_CODE < KERNEL_VERSION(5, 16, 0)
 	static const struct file_operations tmp = { .owner = THIS_MODULE };
 	struct file *dummy = anon_inode_getfile("dummy", &tmp, NULL, 0);

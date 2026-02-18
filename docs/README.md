@@ -22,22 +22,7 @@
 
 - **main branch**
 ```
-curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s main
-```
-
-- **tag**
-```
-curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s v3.0.0-30-legacy
-```
-
-- **susfs branch**
-
-> [!WARNING]
-> This branch is not always updated.
->
-
-```
-curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.sh" | bash -s susfs-rksu-master
+curl -LSs "https://raw.githubusercontent.com/H33CKER/KernelSU/main/kernel/setup.sh" | bash -s main
 ```
 
 ## Hook method
@@ -57,6 +42,7 @@ curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.s
 1. Kernel-based `su` and root access management.
 2. Module system based on [Metamodule](https://kernelsu.org/guide/metamodule.html)
 3. [App Profile](https://kernelsu.org/guide/app-profile.html): Lock up the root power in a cage.
+4. Extra Mananger support
 
 ## Compatibility State
 
@@ -72,10 +58,6 @@ curl -LSs "https://raw.githubusercontent.com/rsuntk/KernelSU/main/kernel/setup.s
 - [Installation Instruction](https://kernelsu.org/guide/installation.html)
 - [How to build?](https://kernelsu.org/guide/how-to-build.html)
 - [Official Website](https://kernelsu.org/)
-
-## Discussion
-
-- RKSU Telegram Group: [@rsukrnlsu_grp](https://t.me/rsukrnlsu_grp)
 
 ## Security
 
